@@ -1,5 +1,3 @@
-[centos]
+[webserver]
 centos1 ansible_host=192.168.56.100
-
-[ubuntu]
 ubuntu1 ansible_host=192.168.56.101
