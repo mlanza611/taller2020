@@ -12,7 +12,14 @@
     sitio: ejemplo
     server: www.ejemplo.com.uy
     hostmaster: admin@ejemplo.com.uy
-        
+
+  roles: 
+  - role: apache-centos
+    when: ansible_facts['os_family'] == "RedHat"
+  - role: apache-debian
+    when: ansible_facts['os_family'] == "Debian"
+
+
   tasks: 
   - name: Install LAMP software
     yum:
@@ -66,7 +73,6 @@
       state: started
       enabled: yes
     loop:
-      - httpd
       - mariadb 
   
   - name: Configure firewall
@@ -76,11 +82,4 @@
       permanent: yes
       immediate: yes
     loop:
-     - http
      - mysql
-  handlers:
-  - name: Restart httpd 
-    service:
-      name: httpd
-      state: restarted
-      enabled: yes
